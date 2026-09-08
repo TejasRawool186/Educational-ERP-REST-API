@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: nextgen-edu-api
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: LOG_LEVEL
+        value: INFO
+      - key: APP_NAME
+        value: "NextGen Institute Educational ERP API"
+      - key: INSTITUTION_NAME
+        value: "NextGen Institute of AI & Technology"
+      - key: INSTITUTION_SHORT
+        value: "NGIAT"
+      - key: SERVICE_NAME
+        value: "nextgen-edu-api"
+      # ── Set the following as SECRET environment variables in the Render dashboard ──
+      # DATABASE_URL  — use the Internal Connection String from nextgen-edu-db
+      # BEARER_TOKEN  — production bearer secret
+      # API_KEY       — production API key secret
+      # BASIC_USERNAME
+      # BASIC_PASSWORD
+
+databases:
+  - name: nextgen-edu-db
+    # Choose plan and region in the Render dashboard during first deploy.
+    # After creation, copy the Internal Connection String into DATABASE_URL
+    # on the nextgen-edu-api Web Service environment variables.
+    # FastAPI and PostgreSQL should be in the same Render region for lowest latency.
